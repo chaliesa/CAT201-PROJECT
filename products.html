@@ -5,17 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - Purrfect Store</title>
     <link rel="stylesheet" href="css/style.css">
-</head>
+    <style>
+        /* Hide detailed product info on products page */
+        .product-details {
+            display: none;
+        }
+
+        /* Product Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            margin: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            color: #2D3436;
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #FF6B9D;
+            transform: scale(1.2);
+        }
+
+        .modal-body {
+            color: #333;
+        }
+
+        .modal-body h3 {
+            color: #FF6B9D;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-body ul {
+            list-style-position: inside;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .product-card {
+            cursor: pointer;
+        }
+    </style>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <h1>🐱 Purrfect Store</h1>
+                <img src="icon/cat logo.png" alt="Purrfect Store" class="logo-icon">
+                <h1>Purrfect Store</h1>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="cart.html">🛒 Cart</a></li>
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
@@ -48,7 +145,7 @@
             <div class="products-grid" id="productsGrid">
                 <!-- Cat Food Products -->
                 <div class="product-card" data-category="food">
-                    <div class="product-image">🥫</div>
+                    <div class="product-image"><img src="images/WHISKAS® Adult Tuna & Salmon flavour.png" alt="WHISKAS Adult Tuna & Salmon" loading="lazy"></div>
                     <h3>WHISKAS Adult Tuna & Salmon</h3>
                     <p class="product-category">Cat Food</p>
                     <p class="product-description">100% nutritionally complete and balanced meal formulated for adult cats 1+ years.</p>
@@ -72,7 +169,7 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Palm Stearin, Animal Hydrolyzed, Soybean Meal, Wheat Flour, Minerals, Corn Gluten, Vitamins, Amino Acids, Yeast Cell Wall, Preservative, Colours, Flavours</p>
                     </div>
-                    <p class="price">MYR 28</p>
+                    <p class="price">RM 28</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
@@ -101,12 +198,12 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Palm Stearin, Animal Hydrolyzed, Soybean Meal, Wheat Flour, Minerals, Corn Gluten, Vitamins, Amino Acids, Yeast Cell Wall, Preservative, Colours, Flavours</p>
                     </div>
-                    <p class="price">MYR 29</p>
+                    <p class="price">RM 29</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="food">
-                    <div class="product-image">🥫</div>
+                    <div class="product-image"><img src="images/WHISKAS® Adult Indoor Formula.png" alt="WHISKAS® Adult Indoor Formula" loading="lazy"></div>
                     <h3>WHISKAS Adult Indoor Formula</h3>
                     <p class="product-category">Cat Food</p>
                     <p class="product-description">100% complete & balanced meal with reduced calories for indoor cats. Helps maintain healthy weight.</p>
@@ -131,12 +228,12 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Beet Pulp, Soybean Meal, Animal Hydrolyzed, Minerals, Palm Stearin, Vitamins, Amino Acid, Yeast Cell Wall, Preservative, Yucca Extract</p>
                     </div>
-                    <p class="price">MYR 25</p>
+                    <p class="price">RM 25</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="food">
-                    <div class="product-image">🥫</div>
+                    <div class="product-image"><img src="images/WHISKAS® Adult Skin & Coat.png" alt="WHISKAS® Adult Skin & Coat" loading="lazy"></div>
                     <h3>WHISKAS Adult Skin & Coat</h3>
                     <p class="product-category">Cat Food</p>
                     <p class="product-description">100% complete & balanced meal specially formulated to reduce hair fall and enhance coat beauty.</p>
@@ -161,12 +258,12 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Beet Pulp, Soybean Meal, Palm Stearin, Animal Hydrolyzed, Minerals, Vitamins, Amino Acid, Yeast Cell Wall, Preservative, Flavours</p>
                     </div>
-                    <p class="price">MYR 30</p>
+                    <p class="price">RM 30</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="food">
-                    <div class="product-image">🥫</div>
+                    <div class="product-image"><img src="images/WHISKAS® Tuna Cat Food.png" alt="WHISKAS Tuna Cat Food" loading="lazy"></div>
                     <h3>WHISKAS Tuna Cat Food</h3>
                     <p class="product-category">Cat Food</p>
                     <p class="product-description">Lip-smacking wet tuna flavour loaf that fulfils 100% of daily nutritional requirements for adult cats.</p>
@@ -190,12 +287,12 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Water, Tuna, Chicken Meat, Sardine By-product, Tuna By-Product, Wheat, Flour, Gelling Agents, Soybean Oil, Amino Acids, Flavour, Vitamins, Minerals, Preservatives, Colour</p>
                     </div>
-                    <p class="price">MYR 22</p>
+                    <p class="price">RM 22</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="food">
-                    <div class="product-image">🥫</div>
+                    <div class="product-image"><img src="images/WHISKAS® Ocean Fish Flavour Loaf Food.png" alt="WHISKAS Ocean Fish Loaf" loading="lazy"></div>
                     <h3>WHISKAS Ocean Fish Loaf</h3>
                     <p class="product-category">Cat Food</p>
                     <p class="product-description">Complete, balanced, nutritious wet food that meets 100% of your cat's daily nutritional needs.</p>
@@ -220,12 +317,12 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Water, Tuna, Chicken Meat, Sardine By-product, Wheat Flour, Gelling Agents, Amino Acid, Soybean Oil, Flavour, Vitamins, Minerals, Preservative, Colour</p>
                     </div>
-                    <p class="price">MYR 23</p>
+                    <p class="price">RM 23</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="food">
-                    <div class="product-image">🥫</div>
+                    <div class="product-image"><img src="images/WHISKAS® Sardines Cat Food.png" alt="WHISKAS Sardines Cat Food" loading="lazy"></div>
                     <h3>WHISKAS Sardines Cat Food</h3>
                     <p class="product-category">Cat Food</p>
                     <p class="product-description">Deliciously nourishing wet food that fulfils 100% of your cat's daily nutritional requirements.</p>
@@ -250,108 +347,108 @@
                         </ul>
                         <p><strong>Ingredients:</strong> Water, Tuna, Sardine By-product, Chicken Meat, Wheat Flour, Gelling Agents, Amino Acid, Soybean Oil, Flavour, Vitamins, Minerals, Preservative, Colour</p>
                     </div>
-                    <p class="price">MYR 20</p>
+                    <p class="price">RM 20</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <!-- Toy Products -->
                 <div class="product-card" data-category="toys">
-                    <div class="product-image">🎾</div>
+                    <div class="product-image"><img src="images/Catnip Cat Wand Toy.webp" alt="Catnip Cat Wand Toy" loading="lazy"></div>
                     <h3>Catnip Cat Wand Toy</h3>
                     <p class="product-category">Toys</p>
                     <p class="product-description">Eco-friendly wand made from recycled materials and infused with premium catnip. Double stitched for durability.</p>
-                    <p class="price">MYR 38</p>
+                    <p class="price">RM 38</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="toys">
-                    <div class="product-image">🎾</div>
+                    <div class="product-image"><img src="images/Jellyfish Cat Teaser Toy.webp" alt="Jellyfish Cat Teaser Toy" loading="lazy"></div>
                     <h3>Jellyfish Cat Teaser Toy</h3>
                     <p class="product-category">Toys</p>
                     <p class="product-description">Durable jellyfish toy designed for fierce kitties. Includes spare elastic piece. Colorful and stylish design.</p>
-                    <p class="price">MYR 32</p>
+                    <p class="price">RM 32</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <!-- Accessories -->
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🏠</div>
+                    <div class="product-image"><img src="images/Cat Tree (Tulip).webp" alt="Tulip Cat Tree" loading="lazy"></div>
                     <h3>Tulip Cat Tree</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Iron framework with soft velvet and cotton rope. 4 perches, 2 large condos. Supports up to 50 lbs.</p>
-                    <p class="price">MYR 180</p>
+                    <p class="price">RM 180</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🏠</div>
+                    <div class="product-image"><img src="images/Cat Tree (Fruity).webp" alt="Fruity Cat Tree" loading="lazy"></div>
                     <h3>Fruity Cat Tree</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Engineered wood with sisal rope. 3 perches, 1 condo, 1 hammock. Perfect for small and medium cats.</p>
-                    <p class="price">MYR 150</p>
+                    <p class="price">RM 150</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🖤</div>
+                    <div class="product-image"><img src="images/Cat Collar (Black).png" alt="Cat Collar - Black" loading="lazy"></div>
                     <h3>Cat Collar - Black</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Luxury leather and suede collar with bell and safety release. Classic black color.</p>
-                    <p class="price">MYR 35</p>
+                    <p class="price">RM 35</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🤍</div>
+                    <div class="product-image"><img src="images/Cat Collar (White).png" alt="Cat Collar - White" loading="lazy"></div>
                     <h3>Cat Collar - White</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Luxury leather and suede collar with bell and safety release. Clean white color.</p>
-                    <p class="price">MYR 35</p>
+                    <p class="price">RM 35</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">💗</div>
+                    <div class="product-image"><img src="images/Cat Collar (Pink).png" alt="Cat Collar - Pink" loading="lazy"></div>
                     <h3>Cat Collar - Pink</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Luxury leather and suede collar with bell and safety release. Adorable pink color.</p>
-                    <p class="price">MYR 35</p>
+                    <p class="price">RM 35</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">❤️</div>
+                    <div class="product-image"><img src="images/Cat Collar (Red).png" alt="Cat Collar - Red" loading="lazy"></div>
                     <h3>Cat Collar - Red</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Luxury leather and suede collar with bell and safety release. Vibrant red color.</p>
-                    <p class="price">MYR 35</p>
+                    <p class="price">RM 35</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🏠</div>
+                    <div class="product-image"><img src="images/Cat Bed (Flower).webp" alt="Flower Cat Bed" loading="lazy"></div>
                     <h3>Flower Cat Bed</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Cute flower-shaped bed with super soft material. Perfect for kittens and puppies. Machine washable.</p>
-                    <p class="price">MYR 65</p>
+                    <p class="price">RM 65</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🏠</div>
+                    <div class="product-image"><img src="images/Cat Bed (Woody).webp" alt="Woody Cat Bed" loading="lazy"></div>
                     <h3>Woody Cat Bed</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Handwoven natural gourd grass bed with removable plush cushion. Durable and non-toxic. Breathable design.</p>
-                    <p class="price">MYR 120</p>
+                    <p class="price">RM 120</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
 
                 <div class="product-card" data-category="accessories">
-                    <div class="product-image">🏠</div>
+                    <div class="product-image"><img src="images/Cat Bowl.webp" alt="Cat Bowl" loading="lazy"></div>
                     <h3>Cat Bowl</h3>
                     <p class="product-category">Accessories</p>
                     <p class="product-description">Ceramic raised bowl set with anti-slip base. Dishwasher safe. Reduces neck strain for comfortable eating.</p>
-                    <p class="price">MYR 45</p>
+                    <p class="price">RM 45</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
             </div>
@@ -365,6 +462,344 @@
             <p>Made with 💜 for cat lovers</p>
         </div>
     </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalProductName"></h2>
+                <button class="modal-close" onclick="closeProductModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalProductDetails"></div>
+        </div>
+    </div>
+
+    <script>
+        // Product database with all details
+        const productDatabase = {
+            "WHISKAS Adult Tuna & Salmon": {
+                description: "100% nutritionally complete and balanced meal formulated for adult cats 1+ years.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Contains 23 Vitamins and Minerals",
+                    "Enriched with Omega 6 and Zinc for Healthy Skin and Coat",
+                    "Packed with Vitamin E and Antioxidants",
+                    "Fortified with Prebiotic for Digestive Health"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "9.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.4%",
+                    "Total Phosphorus": "1.3%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Palm Stearin, Animal Hydrolyzed, Soybean Meal, Wheat Flour, Minerals, Corn Gluten, Vitamins, Amino Acids, Yeast Cell Wall, Preservative, Colours, Flavours"
+            },
+            "WHISKAS Adult Grilled Salmon": {
+                description: "100% nutritionally complete meal with tasty filled pocket kibbles and quality poultry ingredients.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Contains 23 Vitamins and Minerals",
+                    "Enriched with Omega 6 and Zinc",
+                    "Supports Healthy Immune System",
+                    "Fortified with Prebiotic for Digestive Health"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "9.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.4%",
+                    "Total Phosphorus": "1.3%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Palm Stearin, Animal Hydrolyzed, Soybean Meal, Wheat Flour, Minerals, Corn Gluten, Vitamins, Amino Acids, Yeast Cell Wall, Preservative, Colours, Flavours"
+            },
+            "WHISKAS Adult Indoor Formula": {
+                description: "100% complete & balanced meal with reduced calories for indoor cats. Helps maintain healthy weight.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Reduced Calorie Formula for Weight Management",
+                    "Formulated with Yucca Extracts - Controls Stool Odour",
+                    "Made without artificial coloring",
+                    "Supports Healthy Immune System",
+                    "Fortified with Prebiotic for Digestive Health"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "8.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.5%",
+                    "Total Phosphorus": "1.4%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Beet Pulp, Soybean Meal, Animal Hydrolyzed, Minerals, Palm Stearin, Vitamins, Amino Acid, Yeast Cell Wall, Preservative, Yucca Extract"
+            },
+            "WHISKAS Adult Skin & Coat": {
+                description: "100% complete & balanced meal specially formulated to reduce hair fall and enhance coat beauty.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Essential Nutrients help Reduce Hair Fall",
+                    "Quality Protein 30%, Biotin and B Vitamins for Healthy Skin",
+                    "Natural Fiber helps Control Hairball",
+                    "Made without artificial coloring",
+                    "Supports Healthy Immune System"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "10.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.5%",
+                    "Total Phosphorus": "1.4%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Beet Pulp, Soybean Meal, Palm Stearin, Animal Hydrolyzed, Minerals, Vitamins, Amino Acid, Yeast Cell Wall, Preservative, Flavours"
+            },
+            "WHISKAS Tuna Cat Food": {
+                description: "Lip-smacking wet tuna flavour loaf that fulfils 100% of daily nutritional requirements for adult cats.",
+                features: [
+                    "Made from highest quality ingredients from real tuna",
+                    "Supports Strong Immune System",
+                    "Contains all necessary vitamins and minerals",
+                    "Helps to maintain skin and coat",
+                    "Optimum sodium amount suitable for cats"
+                ],
+                nutrition: {
+                    "Crude Protein": "10.0%",
+                    "Crude Fat": "4.5%",
+                    "Crude Fibre": "0.5%",
+                    "Moisture": "80.0%",
+                    "Calcium": "0.8%",
+                    "Total Phosphorus": "0.4%"
+                },
+                ingredients: "Water, Tuna, Chicken Meat, Sardine By-product, Tuna By-Product, Wheat, Flour, Gelling Agents, Soybean Oil, Amino Acids, Flavour, Vitamins, Minerals, Preservatives, Colour"
+            },
+            "WHISKAS Ocean Fish Loaf": {
+                description: "Complete, balanced, nutritious wet food that meets 100% of your cat's daily nutritional needs.",
+                features: [
+                    "Made with high-quality ingredients derived from real fish",
+                    "Support for a healthy immune system",
+                    "Contains essential vitamins and minerals for body functions",
+                    "Promotes healthy skin and coat",
+                    "Appropriate sodium levels suitable for cats",
+                    "Can entice even the fussiest eaters"
+                ],
+                nutrition: {
+                    "Crude Protein": "9.0%",
+                    "Crude Fat": "4.5%",
+                    "Crude Fibre": "0.5%",
+                    "Moisture": "80.0%",
+                    "Calcium": "0.7%",
+                    "Total Phosphorus": "0.35%"
+                },
+                ingredients: "Water, Tuna, Chicken Meat, Sardine By-product, Wheat Flour, Gelling Agents, Amino Acid, Soybean Oil, Flavour, Vitamins, Minerals, Preservative, Colour"
+            },
+            "WHISKAS Sardines Cat Food": {
+                description: "Deliciously nourishing wet food that fulfils 100% of your cat's daily nutritional requirements.",
+                features: [
+                    "Crafted with high-quality ingredients sourced from real fish",
+                    "Supports a strong immune system",
+                    "Promotes lustrous coat and healthy digestion",
+                    "Enriched with essential vitamins and minerals",
+                    "Appropriate sodium level ideal for cat's health",
+                    "Complete and balanced meal"
+                ],
+                nutrition: {
+                    "Crude Protein": "9.0%",
+                    "Crude Fat": "3.0%",
+                    "Crude Fibre": "0.5%",
+                    "Moisture": "82.0%",
+                    "Calcium": "0.7%",
+                    "Total Phosphorus": "0.35%"
+                },
+                ingredients: "Water, Tuna, Sardine By-product, Chicken Meat, Wheat Flour, Gelling Agents, Amino Acid, Soybean Oil, Flavour, Vitamins, Minerals, Preservative, Colour"
+            },
+            "Catnip Cat Wand Toy": {
+                description: "Eco-friendly wand made from recycled materials and infused with premium catnip. Double stitched for durability.",
+                features: [
+                    "Eco-friendly recycled materials",
+                    "Premium catnip infused",
+                    "Double stitched for durability",
+                    "Interactive play design",
+                    "Safe for cats of all ages"
+                ]
+            },
+            "Jellyfish Cat Teaser Toy": {
+                description: "Durable jellyfish toy designed for fierce kitties. Includes spare elastic piece.",
+                features: [
+                    "Colorful jellyfish design",
+                    "Durable construction",
+                    "Interactive teaser toy",
+                    "Includes spare elastic",
+                    "Perfect for active cats"
+                ]
+            },
+            "Tulip Cat Tree": {
+                description: "Iron framework with soft velvet and cotton rope. 4 perches, 2 large condos. Supports up to 50 lbs.",
+                features: [
+                    "Iron framework construction",
+                    "Soft velvet material",
+                    "4 perches for multiple cats",
+                    "2 large condos for rest",
+                    "Supports up to 50 lbs",
+                    "Cotton rope scratching posts"
+                ]
+            },
+            "Fruity Cat Tree": {
+                description: "Engineered wood with sisal rope. 3 perches, 1 condo, 1 hammock. Perfect for small and medium cats.",
+                features: [
+                    "Engineered wood construction",
+                    "Sisal rope scratching posts",
+                    "3 perches for climbing",
+                    "1 comfortable condo",
+                    "1 relaxing hammock",
+                    "Perfect for small to medium cats"
+                ]
+            },
+            "Cat Collar - Black": {
+                description: "Luxury leather and suede collar with bell and safety release. Classic black color.",
+                features: [
+                    "Premium leather and suede material",
+                    "Safety release buckle",
+                    "Built-in bell for tracking",
+                    "Adjustable fit",
+                    "Classic black color",
+                    "Comfortable for all-day wear"
+                ]
+            },
+            "Cat Collar - White": {
+                description: "Luxury leather and suede collar with bell and safety release. Clean white color.",
+                features: [
+                    "Premium leather and suede material",
+                    "Safety release buckle",
+                    "Built-in bell for tracking",
+                    "Adjustable fit",
+                    "Clean white color",
+                    "Comfortable for all-day wear"
+                ]
+            },
+            "Cat Collar - Pink": {
+                description: "Luxury leather and suede collar with bell and safety release. Adorable pink color.",
+                features: [
+                    "Premium leather and suede material",
+                    "Safety release buckle",
+                    "Built-in bell for tracking",
+                    "Adjustable fit",
+                    "Adorable pink color",
+                    "Comfortable for all-day wear"
+                ]
+            },
+            "Cat Collar - Red": {
+                description: "Luxury leather and suede collar with bell and safety release. Vibrant red color.",
+                features: [
+                    "Premium leather and suede material",
+                    "Safety release buckle",
+                    "Built-in bell for tracking",
+                    "Adjustable fit",
+                    "Vibrant red color",
+                    "Comfortable for all-day wear"
+                ]
+            },
+            "Flower Cat Bed": {
+                description: "Cute flower-shaped bed with super soft material. Perfect for kittens and puppies. Machine washable.",
+                features: [
+                    "Flower-shaped design",
+                    "Super soft material",
+                    "Comfortable for kittens and small pets",
+                    "Machine washable",
+                    "Non-slip bottom",
+                    "Cozy enclosed design"
+                ]
+            },
+            "Woody Cat Bed": {
+                description: "Handwoven natural gourd grass bed with removable plush cushion. Durable and non-toxic. Breathable design.",
+                features: [
+                    "Handwoven natural gourd grass",
+                    "Removable plush cushion",
+                    "Durable and non-toxic",
+                    "Breathable design",
+                    "Natural materials",
+                    "Perfect for natural lovers"
+                ]
+            },
+            "Cat Bowl": {
+                description: "Ceramic raised bowl set with anti-slip base. Dishwasher safe. Reduces neck strain for comfortable eating.",
+                features: [
+                    "Ceramic material",
+                    "Raised design",
+                    "Anti-slip base",
+                    "Dishwasher safe",
+                    "Reduces neck strain",
+                    "Comfortable eating height"
+                ]
+            }
+        };
+
+        function openProductModal(productName) {
+            const product = productDatabase[productName];
+            if (!product) return;
+
+            const modal = document.getElementById('productModal');
+            document.getElementById('modalProductName').textContent = productName;
+            
+            let detailsHTML = `<p><strong>${product.description}</strong></p>`;
+            
+            if (product.features) {
+                detailsHTML += '<h3>Key Features:</h3><ul>';
+                product.features.forEach(feature => {
+                    detailsHTML += `<li>${feature}</li>`;
+                });
+                detailsHTML += '</ul>';
+            }
+            
+            if (product.nutrition) {
+                detailsHTML += '<h3>Nutritional Information:</h3><ul>';
+                Object.entries(product.nutrition).forEach(([key, value]) => {
+                    detailsHTML += `<li><strong>${key}:</strong> ${value}</li>`;
+                });
+                detailsHTML += '</ul>';
+            }
+            
+            if (product.ingredients) {
+                detailsHTML += `<h3>Ingredients:</h3><p>${product.ingredients}</p>`;
+            }
+            
+            document.getElementById('modalProductDetails').innerHTML = detailsHTML;
+            modal.classList.add('active');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // Set up event listeners for product cards
+        window.addEventListener('load', function() {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.tagName === 'BUTTON') return;
+                    const productName = this.querySelector('h3').textContent.trim();
+                    openProductModal(productName);
+                });
+            });
+        });
+
+        // Close modal when clicking outside
+        const productModal = document.getElementById('productModal');
+        if (productModal) {
+            productModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeProductModal();
+                }
+            });
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeProductModal();
+            }
+        });
+    </script>
 
     <script>
         function filterProducts(category) {

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Purrfect Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Cart-specific styles */
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart-table thead {
+            background-color: var(--light-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .cart-table th {
+            padding: 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cart-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .cart-table tbody tr:hover {
+            background-color: #fafafa;
+        }
+
+        /* Item details in cart */
+        .cart-item-details {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .cart-item-info h3 {
+            color: var(--dark-color);
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+        }
+
+        .cart-item-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Price column */
+        .price-column {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Quantity selector */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 0.25rem;
+            width: fit-content;
+        }
+
+        .quantity-btn {
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            font-weight: bold;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .quantity-input {
+            width: 40px;
+            height: 32px;
+            border: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Remove button */
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            padding: 0.25rem 0.5rem;
+        }
+
+        .remove-btn:hover {
+            color: #c0392b;
+            transform: scale(1.2);
+        }
+
+        /* Cart summary sidebar */
+        .cart-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            height: fit-content;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 100px;
+        }
+
+        .cart-summary h2 {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: #666;
+        }
+
+        .summary-row.total {
+            border: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            padding: 1rem 0 0 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row.total .total-price {
+            color: var(--secondary-color);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn:hover {
+            background-color: #E5558B;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .continue-shopping {
+            width: 100%;
+            padding: 12px;
+            background-color: white;
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .continue-shopping:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: #fff5f8;
+        }
+
+        /* Empty cart message */
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .cart-table th:nth-child(3),
+            .cart-table td:nth-child(3) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cart-item-image {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .cart-table th,
+            .cart-table td {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .cart-item-info h3 {
+                font-size: 0.95rem;
+            }
+
+            .quantity-controls {
+                transform: scale(0.9);
+            }
+        }
+
+        /* Product Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            margin: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            color: var(--dark-color);
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        .modal-body {
+            color: #333;
+        }
+
+        .modal-body h3 {
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-body ul {
+            list-style-position: inside;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="icon/cat logo.png" alt="Purrfect Store" class="logo-icon">
+                <h1>Purrfect Store</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html" class="active">Cart</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>🛒 Shopping Cart</h1>
+            <p>Review and manage your items</p>
+        </div>
+    </section>
+
+    <!-- Main Cart Section -->
+    <section class="products">
+        <div class="container">
+            <div class="cart-container">
+                <!-- Cart Items Table -->
+                <div class="cart-items">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Cat Food - WHISKAS Adult Tuna & Salmon -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/WHISKAS® Adult Tuna & Salmon flavour.png" alt="WHISKAS Adult Tuna & Salmon"></div>
+                                        <div class="cart-item-info">
+                                            <h3>WHISKAS Adult Tuna & Salmon</h3>
+                                            <p>Cat Food</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 28</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="2" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 56</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+
+                            <!-- Cat Food - WHISKAS Adult Grilled Salmon -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/WHISKAS%C2%AE%20Adult%20Grilled%20Salmon%20Steak%20Flavour.png" alt="WHISKAS Adult Grilled Salmon"></div>
+                                        <div class="cart-item-info">
+                                            <h3>WHISKAS Adult Grilled Salmon</h3>
+                                            <p>Cat Food</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 29</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 29</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+
+                            <!-- Cat Food - WHISKAS Adult Indoor Formula -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/WHISKAS® Adult Indoor Formula.png" alt="WHISKAS Adult Indoor Formula"></div>
+                                        <div class="cart-item-info">
+                                            <h3>WHISKAS Adult Indoor Formula</h3>
+                                            <p>Cat Food</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 25</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 25</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+
+                            <!-- Toy - Catnip Cat Wand Toy -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/Catnip Cat Wand Toy.webp" alt="Catnip Cat Wand Toy"></div>
+                                        <div class="cart-item-info">
+                                            <h3>Catnip Cat Wand Toy</h3>
+                                            <p>Toys</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 38</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 38</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+
+                            <!-- Accessories - Tulip Cat Tree -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/Cat Tree (Tulip).webp" alt="Tulip Cat Tree"></div>
+                                        <div class="cart-item-info">
+                                            <h3>Tulip Cat Tree</h3>
+                                            <p>Accessories</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 180</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 180</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+
+                            <!-- Accessories - Cat Collar (Black) -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/Cat Collar (Black).png" alt="Cat Collar - Black"></div>
+                                        <div class="cart-item-info">
+                                            <h3>Cat Collar - Black</h3>
+                                            <p>Accessories</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 35</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="2" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 70</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+
+                            <!-- Accessories - Flower Cat Bed -->
+                            <tr>
+                                <td>
+                                    <div class="cart-item-details">
+                                        <div class="cart-item-image"><img src="images/Cat Bed (Flower).webp" alt="Flower Cat Bed"></div>
+                                        <div class="cart-item-info">
+                                            <h3>Flower Cat Bed</h3>
+                                            <p>Accessories</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 65</td>
+                                <td>
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn">−</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button class="quantity-btn">+</button>
+                                    </div>
+                                </td>
+                                <td class="price-column">RM 65</td>
+                                <td>
+                                    <button class="remove-btn" title="Remove item">✕</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Cart Summary Sidebar -->
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span>RM 463</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span>RM 15</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Tax:</span>
+                        <span>RM 38</span>
+                    </div>
+
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span class="total-price">RM 516</span>
+                    </div>
+
+                    <button class="checkout-btn">Proceed to Checkout</button>
+                    <button class="continue-shopping">Continue Shopping</button>
+
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color); color: #999; font-size: 0.85rem; text-align: center;">
+                        <p>✓ Free shipping on orders over $50</p>
+                        <p>✓ Secure checkout</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Purrfect Store. All rights reserved.</p>
+        <p>Your trusted source for quality cat products.</p>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalProductName"></h2>
+                <button class="modal-close" onclick="closeProductModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalProductDetails"></div>
+        </div>
+    </div>
+
+    <script>
+        // Product information database
+        const productDatabase = {
+            "WHISKAS Adult Tuna & Salmon": {
+                name: "WHISKAS Adult Tuna & Salmon",
+                description: "100% nutritionally complete and balanced meal formulated for adult cats 1+ years.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Contains 23 Vitamins and Minerals",
+                    "Enriched with Omega 6 and Zinc for Healthy Skin and Coat",
+                    "Packed with Vitamin E and Antioxidants",
+                    "Fortified with Prebiotic for Digestive Health"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "9.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.4%",
+                    "Total Phosphorus": "1.3%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Palm Stearin, Animal Hydrolyzed, Soybean Meal, Wheat Flour, Minerals, Corn Gluten, Vitamins, Amino Acids, Yeast Cell Wall, Preservative, Colours, Flavours"
+            },
+            "WHISKAS Adult Grilled Salmon": {
+                name: "WHISKAS Adult Grilled Salmon",
+                description: "100% nutritionally complete meal with tasty filled pocket kibbles and quality poultry ingredients.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Contains 23 Vitamins and Minerals",
+                    "Enriched with Omega 6 and Zinc",
+                    "Supports Healthy Immune System",
+                    "Fortified with Prebiotic for Digestive Health"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "9.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.4%",
+                    "Total Phosphorus": "1.3%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Palm Stearin, Animal Hydrolyzed, Soybean Meal, Wheat Flour, Minerals, Corn Gluten, Vitamins, Amino Acids, Yeast Cell Wall, Preservative, Colours, Flavours"
+            },
+            "WHISKAS Adult Indoor Formula": {
+                name: "WHISKAS Adult Indoor Formula",
+                description: "100% complete & balanced meal with reduced calories for indoor cats. Helps maintain healthy weight.",
+                features: [
+                    "Complete and Balanced Nutrition",
+                    "Reduced Calorie Formula for Weight Management",
+                    "Formulated with Yucca Extracts - Controls Stool Odour",
+                    "Made without artificial coloring",
+                    "Supports Healthy Immune System",
+                    "Fortified with Prebiotic for Digestive Health"
+                ],
+                nutrition: {
+                    "Crude Protein": "30.0%",
+                    "Crude Fat": "8.0%",
+                    "Crude Fibre": "5.0%",
+                    "Moisture": "12.0%",
+                    "Calcium": "1.5%",
+                    "Total Phosphorus": "1.4%"
+                },
+                ingredients: "Cereals (Corn, Wheat, Defatted Rice Bran), Poultry and Poultry By-products, Beet Pulp, Soybean Meal, Animal Hydrolyzed, Minerals, Palm Stearin, Vitamins, Amino Acid, Yeast Cell Wall, Preservative, Yucca Extract"
+            },
+            "Catnip Cat Wand Toy": {
+                name: "Catnip Cat Wand Toy",
+                description: "Eco-friendly wand made from recycled materials and infused with premium catnip.",
+                features: [
+                    "Eco-friendly recycled materials",
+                    "Premium catnip infused",
+                    "Double stitched for durability",
+                    "Interactive play design",
+                    "Safe for cats of all ages"
+                ]
+            },
+            "Tulip Cat Tree": {
+                name: "Tulip Cat Tree",
+                description: "Iron framework with soft velvet and cotton rope. Perfect for climbing and perching.",
+                features: [
+                    "Iron framework construction",
+                    "Soft velvet material",
+                    "4 perches for multiple cats",
+                    "2 large condos for rest",
+                    "Supports up to 50 lbs",
+                    "Cotton rope scratching posts"
+                ]
+            },
+            "Cat Collar - Black": {
+                name: "Cat Collar - Black",
+                description: "Luxury leather and suede collar with bell and safety release. Classic black color.",
+                features: [
+                    "Premium leather and suede material",
+                    "Safety release buckle",
+                    "Built-in bell for tracking",
+                    "Adjustable fit",
+                    "Classic black color",
+                    "Comfortable for all-day wear"
+                ]
+            },
+            "Flower Cat Bed": {
+                name: "Flower Cat Bed",
+                description: "Cute flower-shaped bed with super soft material. Perfect for kittens and puppies.",
+                features: [
+                    "Flower-shaped design",
+                    "Super soft material",
+                    "Comfortable for kittens and small pets",
+                    "Machine washable",
+                    "Non-slip bottom",
+                    "Cozy enclosed design"
+                ]
+            }
+        };
+
+        function openProductModal(productName) {
+            const product = productDatabase[productName];
+            if (!product) {
+                console.log("Product not found:", productName);
+                return;
+            }
+
+            const modal = document.getElementById('productModal');
+            document.getElementById('modalProductName').textContent = product.name;
+            
+            let detailsHTML = `<p><strong>${product.description}</strong></p>`;
+            
+            if (product.features) {
+                detailsHTML += '<h3>Key Features:</h3><ul>';
+                product.features.forEach(feature => {
+                    detailsHTML += `<li>${feature}</li>`;
+                });
+                detailsHTML += '</ul>';
+            }
+            
+            if (product.nutrition) {
+                detailsHTML += '<h3>Nutritional Information:</h3><ul>';
+                Object.entries(product.nutrition).forEach(([key, value]) => {
+                    detailsHTML += `<li><strong>${key}:</strong> ${value}</li>`;
+                });
+                detailsHTML += '</ul>';
+            }
+            
+            if (product.ingredients) {
+                detailsHTML += `<h3>Ingredients:</h3><p>${product.ingredients}</p>`;
+            }
+            
+            document.getElementById('modalProductDetails').innerHTML = detailsHTML;
+            modal.classList.add('active');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // Set up event listeners when DOM is ready
+        window.addEventListener('load', function() {
+            const tableBody = document.querySelector('.cart-table tbody');
+            if (tableBody) {
+                tableBody.addEventListener('click', function(e) {
+                    // Check if we clicked on a button or inside a button
+                    if (e.target.closest('button')) return;
+                    
+                    // Find the closest row
+                    const row = e.target.closest('tr');
+                    if (!row) return;
+                    
+                    const productName = row.querySelector('.cart-item-info h3').textContent.trim();
+                    console.log("Clicked product:", productName);
+                    openProductModal(productName);
+                });
+            }
+            
+            // Add cursor pointer to rows
+            document.querySelectorAll('.cart-table tbody tr').forEach(row => {
+                row.style.cursor = 'pointer';
+            });
+        });
+
+        // Close modal when clicking outside
+        const productModal = document.getElementById('productModal');
+        if (productModal) {
+            productModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeProductModal();
+                }
+            });
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeProductModal();
+            }
+        });
+    </script>
+</body>
+</html>
