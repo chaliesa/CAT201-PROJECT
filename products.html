@@ -438,7 +438,7 @@
                     <div class="product-image"><img src="images/Cat Bed (Woody).webp" alt="Woody Cat Bed" loading="lazy"></div>
                     <h3>Woody Cat Bed</h3>
                     <p class="product-category">Accessories</p>
-                    <p class="product-description">Handwoven natural gourd grass bed with removable plush cushion. Durable and non-toxic. Breathable design.</p>
+                    <p class="product-description">Handwoven natural gourd grass bed with removable plush cushion. Durable and non-toxic. Breathable and non-toxic. Breathable design.</p>
                     <p class="price">RM 120</p>
                     <button class="btn btn-primary">Add to Cart</button>
                 </div>
@@ -836,5 +836,30 @@
             }
         });
     </script>
+
+    <h1>Our Products</h1>
+    <div class="product-list">
+        <!-- Product A -->
+        <form action="cart.jsp" method="post">
+            <input type="hidden" name="itemId" value="101">
+            <input type="hidden" name="itemName" value="Cat Food - Premium">
+            <button type="submit">Add Cat Food - Premium to Cart</button>
+        </form>
+
+        <!-- Product B -->
+        <form action="cart.jsp" method="post">
+            <input type="hidden" name="itemId" value="102">
+            <input type="hidden" name="itemName" value="Cat Toy - Feather Wand">
+            <button type="submit">Add Cat Toy - Feather Wand to Cart</button>
+        </form>
+
+        <!-- Product C -->
+        <form action="cart.jsp" method="post">
+            <input type="hidden" name="itemId" value="103">
+            <input type="hidden" name="itemName" value="Cat Bed - Cozy Cushion">
+            <button type="submit">Add Cat Bed - Cozy Cushion to Cart</button>
+        </form>
+    </div>
+    <a href="cart.jsp">Go to Cart</a>
 </body>
 </html>
