@@ -1,0 +1,94 @@
+{
+  "products" : [ {
+    "id" : "FOOD-001",
+    "name" : "WHISKAS Adult Tuna & Salmon",
+    "stock" : 45,
+    "price" : 28.0
+  }, {
+    "id" : "FOOD-002",
+    "name" : "WHISKAS Adult Grilled Salmon",
+    "stock" : 38,
+    "price" : 29.0
+  },{
+    "id" : "FOOD-003",
+    "name" : "WHISKAS Adult Indoor Formula",
+    "stock" : 50,
+    "price" : 25.0
+  }, {
+    "id" : "FOOD-004",
+    "name" : "WHISKAS Adult Skin & Coat",
+    "stock" : 25,
+    "price" : 30.0
+  }, {
+    "id" : "FOOD-005",
+    "name" : "WHISKAS Tuna Cat Food",
+    "stock" : 60,
+    "price" : 22.0
+  },{
+    "id" : "FOOD-006",
+    "name" : "WHISKAS Ocean Fish",
+    "stock" : 55,
+    "price" : 23.0
+  }, {
+    "id" : "FOOD-007",
+    "name" : "WHISKAS Sardines Cat Food",
+    "stock" : 42,
+    "price" : 20.0
+  },{
+    "id" : "TOY-101",
+    "name" : "Catnip Cat Wand Toy",
+    "stock" : 15,
+    "price" : 38.0
+  }, {
+    "id" : "TOY-102",
+    "name" : "Jellyfish Cat Teaser Toy",
+    "stock" : 20,
+    "price" : 32.0
+  },{
+    "id" : "ACC-201",
+    "name" : "Tulip Cat Tree",
+    "stock" : 5,
+    "price" : 180.0
+  } ,{
+    "id" : "ACC-202",
+    "name" : "Fruity Cat Tree",
+    "stock" : 8,
+    "price" : 150.0
+  } ,{
+    "id" : "ACC-203",
+    "name" : "Cat Collar - Black",
+    "stock" : 30,
+    "price" : 35.0
+  } ,{
+    "id" : "ACC-204",
+    "name" : "Cat Collar - White",
+    "stock" : 28,
+    "price" : 35.0
+  } ,{
+    "id" : "ACC-205",
+    "name" : "Cat Collar - Pink",
+    "stock" : 22,
+    "price" : 35.0
+  } ,{
+    "id" : "ACC-206",
+    "name" : "Cat Collar - Red",
+    "stock" : 25,
+    "price" : 35.0
+  } ,{
+    "id" : "ACC-207",
+    "name" : "Flower Cat Bed",
+    "stock" : 12,
+    "price" : 85.0
+  } ],
+  "orders" : [ {
+    "orderId" : "ORD-101",
+    "productId" : "FOOD-001",
+    "quantity" : 2,
+    "status" : "Pending"
+  }, {
+    "orderId" : "ORD-102",
+    "productId" : "ACC-205",
+    "quantity" : 3,
+    "status" : "Pending"
+  } ]
+}
