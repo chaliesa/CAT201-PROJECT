@@ -25,14 +25,13 @@
             <scope>provided</scope>
         </dependency>
         
-        <!-- Jackson for JSON Processing (Already in your project) -->
+        <!-- Jackson for JSON Processing -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.13.3</version>
         </dependency>
         
-        <!-- org.json for Module 3 Admin Servlets -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
